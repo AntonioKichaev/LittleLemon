@@ -4,3 +4,4 @@ pymysql==1.0.2
 cryptography==39.0.0
 djangorestframework==3.14.0
 djangorestframework-xml==2.0.0
+djoser==2.1.0
