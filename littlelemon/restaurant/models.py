@@ -6,6 +6,9 @@ class Menu(models.Model):
     price = models.DecimalField(max_digits=10,decimal_places=2,null=False)
     inventory = models.IntegerField(null=False)
 
+    def __str__(self) -> str:
+        return f"{self.title} : {self.price}"
+
 class Booking(models.Model):
     name = models.CharField(max_length=255,null=False)
     no_of_guests = models.IntegerField(null=False)
