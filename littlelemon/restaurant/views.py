@@ -15,6 +15,16 @@ class HomeView(View):
         return render(request=request,template_name='index.html',context={})
 
 
+class BookView(View):
+
+    def get(self,request):
+        return render(request=request,template_name='book.html',context={})
+
+class MenuView(View):
+
+    def get(self,request):
+        return render(request=request,template_name='menu.html',context={})
+
 class MenuItemView(generics.ListCreateAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuSerialize

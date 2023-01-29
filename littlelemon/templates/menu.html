@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content  %}
+<h1>Main menu</h1>
+<section id="menu_item_content">
+        
+</section>
+
+   
+
+    
+
+
+<script>
+
+    fetch("http://127.0.0.1:8000/restaurant/menu-items")
+    .then(data=>data.json())
+    .then(
+        data=>{
+            const articles = []
+            for (let index = 0; index < data.length; index++) {
+                const element = data[index];
+                const src_img = "{% static 'img/'%}"
+                const column_element = `<div class="column"> <article> <h2>${element.title}</h2> <p>price: ${element.price}</p> <img src='${src_img}${element.title}.jpg' %}"></article></div>`
+                if (index%2==0){
+                    articles.push('<section>')
+                    articles.push(column_element)
+                    
+
+                }
+                else{
+                    articles.push(column_element)
+                    articles.push('</section>')
+                }
+                
+            }
+            document.getElementById("menu_item_content").innerHTML = articles.join("")
+
+        }
+    )
+
+</script>
+{%  endblock %}

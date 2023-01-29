@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<section>
+    <article>
+        <h1>Make a reservations</h1>
+        <div class="row">
+
+            <div class="column">
+                
+                <form  method="POST" id="form">
+                    {% csrf_token %}
+                    <label for="username">Name</label>
+                    <input type="text" id="username">
+                    
+                    <label for="number_of_guest">number of guest</label>
+                    <input type="number" id="number_of_guest" name="number_of_guest">
+                    
+                    <label for="reservation_date">Reservation date</label>
+                    <input type="date" id="reservation_date" name="reservation_date">        
+                    
+                    
+                    <label for="reservation_time">Reservation time</label>
+                    <select id="reservation_time" name="reservation_time">
+                        <option value="0" disabled> Select time</option>
+                        <option value="1"> 1</option>
+                        <option value="2"> 2</option>
+                    </select>
+                    
+                    <input type="submit" value="book" id="apply_book">
+                </form>
+            </div>
+
+            <div class="columns">
+                <h2> Booking for <span id="today"></span></h2>
+                <p> as da das das dasa </p>
+            </div>
+
+        </div>
+    </article>
+</section>
+
+<script>
+    const date = new Date()
+    date_noew = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2,"0")}-${date.getDate().toString().padStart(2,"0")}`
+    console.log(date_noew)
+    document.getElementById('reservation_date').value = date_noew
+    document.getElementById('reservation_date').addEventListener('change',onChangeReservationDate)
+    onChangeReservationDate()
+    function onChangeReservationDate(){
+        el = document.getElementById("today")
+        selected_date = document.getElementById('reservation_date').value
+        el.innerHTML = selected_date
+
+
+    }
+
+    document.getElementById('apply_book').addEventListener('click',applyBook)
+
+    function applyBook(e)
+    {
+        const form_data = {
+            username: document.getElementById('username').value,
+            number_of_guest: document.getElementById('number_of_guest').value,
+            username: document.getElementById('reservation_date').value,
+            username: document.getElementById('reservation_time').value,
+        }
+        console.log(JSON.stringify(form_data))
+        fetch("{% url 'book' %}",
+        {
+            method:'post',
+            body: JSON.stringify(form_data)
+        }
+        )
+
+    }
+
+</script>
+
+{% endblock content %}
